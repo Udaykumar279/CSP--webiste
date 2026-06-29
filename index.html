@@ -1,0 +1,764 @@
+
+Index · HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Horticulture | Community Service Project</title>
+<meta name="description" content="Horticulture Community Service Project — cultivating a greener and healthier future through sustainable farming, modern agri-tech, and community engagement." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+ 
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --primary:#2E7D32;
+  --primary-dark:#1B5E20;
+  --secondary:#66BB6A;
+  --accent:#A5D6A7;
+  --bg:#F8FFF5;
+  --text:#222222;
+  --card:#ffffff;
+  --shadow: 0 10px 30px rgba(46,125,50,0.12);
+  --shadow-lg: 0 20px 50px rgba(46,125,50,0.18);
+  --radius: 18px;
+  --font-display:'Fraunces', serif;
+  --font-body:'Outfit', sans-serif;
+  --nav-h: 78px;
+}
+[data-theme="dark"]{
+  --bg:#0e1611;
+  --text:#eaf2e8;
+  --card:#15201a;
+  --shadow: 0 10px 30px rgba(0,0,0,0.4);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,0.5);
+  --accent:#2c4a2f;
+}
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  transition:background .4s ease, color .4s ease;
+}
+h1,h2,h3,h4{font-family:var(--font-display); line-height:1.15; letter-spacing:-0.01em;}
+img{max-width:100%; display:block;}
+a{color:inherit; text-decoration:none;}
+button{font-family:var(--font-body); cursor:pointer; border:none; background:none;}
+.container{max-width:1240px; margin:0 auto; padding:0 24px;}
+.eyebrow{
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:0.78rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--primary); margin-bottom:14px;
+}
+[data-theme="dark"] .eyebrow{color:var(--secondary);}
+.eyebrow::before{content:""; width:8px; height:8px; border-radius:50%; background:var(--secondary); display:inline-block;}
+.section{padding:120px 0; position:relative;}
+.section-head{max-width:680px; margin-bottom:56px;}
+.section-head h2{font-size:clamp(2rem,4vw,2.8rem); font-weight:700;}
+.section-head p{margin-top:14px; font-size:1.05rem; opacity:0.78; max-width:560px;}
+.section-alt{background: linear-gradient(180deg, rgba(165,214,167,0.18), rgba(165,214,167,0));}
+[data-theme="dark"] .section-alt{background:linear-gradient(180deg, rgba(102,187,106,0.06), rgba(0,0,0,0));}
+ 
+/* scroll reveal */
+.reveal{opacity:0; transform:translateY(36px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1; transform:translateY(0);}
+.reveal-zoom{opacity:0; transform:scale(.92); transition:opacity .6s ease, transform .6s ease;}
+.reveal-zoom.in{opacity:1; transform:scale(1);}
+ 
+/* ============ LOADER ============ */
+#loader{
+  position:fixed; inset:0; background:var(--bg); z-index:9999;
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px;
+  transition:opacity .6s ease, visibility .6s ease;
+}
+.loader-leaf{
+  width:54px; height:54px; position:relative; animation:spinLeaf 1.4s ease-in-out infinite;
+}
+.loader-leaf svg{width:100%; height:100%;}
+@keyframes spinLeaf{0%{transform:rotate(0deg) scale(1);}50%{transform:rotate(180deg) scale(1.15);}100%{transform:rotate(360deg) scale(1);}}
+#loader span{font-family:var(--font-display); font-weight:600; color:var(--primary); letter-spacing:0.04em;}
+#loader.hide{opacity:0; visibility:hidden;}
+ 
+/* ============ SCROLL PROGRESS ============ */
+#scroll-progress{position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--primary),var(--secondary)); width:0%; z-index:1100; transition:width .1s linear;}
+ 
+/* ============ NAVBAR ============ */
+#navbar{
+  position:fixed; top:0; left:0; width:100%; z-index:1000;
+  height:var(--nav-h); display:flex; align-items:center;
+  background:rgba(248,255,245,0.55);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border-bottom:1px solid rgba(46,125,50,0.1);
+  transition:background .4s ease, border-color .4s ease, box-shadow .4s ease;
+}
+[data-theme="dark"] #navbar{background:rgba(14,22,17,0.55); border-bottom:1px solid rgba(102,187,106,0.12);}
+#navbar.scrolled{box-shadow:0 8px 24px rgba(46,125,50,0.1);}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; width:100%;}
+.logo{display:flex; align-items:center; gap:10px; font-family:var(--font-display); font-weight:700; font-size:1.25rem; color:var(--primary-dark);}
+[data-theme="dark"] .logo{color:var(--secondary);}
+.logo .dot{width:10px; height:10px; border-radius:50%; background:var(--secondary);}
+.nav-links{display:flex; gap:30px; align-items:center;}
+.nav-links a{font-size:0.92rem; font-weight:500; opacity:0.82; position:relative; padding:6px 0;}
+.nav-links a::after{content:""; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--secondary); transition:width .3s ease;}
+.nav-links a:hover::after{width:100%;}
+.nav-actions{display:flex; align-items:center; gap:14px;}
+.icon-btn{width:38px; height:38px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(46,125,50,0.08); transition:transform .25s ease, background .25s ease;}
+.icon-btn:hover{transform:scale(1.08); background:rgba(46,125,50,0.16);}
+.icon-btn svg{width:18px; height:18px; stroke:var(--primary);}
+[data-theme="dark"] .icon-btn svg{stroke:var(--secondary);}
+#search-box{position:absolute; top:var(--nav-h); right:24px; background:var(--card); box-shadow:var(--shadow-lg); border-radius:14px; padding:10px; width:300px; display:none; flex-direction:column; gap:4px; max-height:340px; overflow:auto;}
+#search-box.open{display:flex;}
+#search-box input{width:100%; padding:10px 12px; border-radius:10px; border:1px solid rgba(46,125,50,0.2); font-family:var(--font-body); background:transparent; color:var(--text);}
+.search-result{padding:8px 10px; border-radius:8px; font-size:0.88rem; opacity:0.85;}
+.search-result:hover{background:rgba(102,187,106,0.12); cursor:pointer;}
+.hamburger{display:none; width:38px; height:38px; flex-direction:column; justify-content:center; gap:5px;}
+.hamburger span{height:2px; width:100%; background:var(--primary); border-radius:2px; transition:.3s;}
+[data-theme="dark"] .hamburger span{background:var(--secondary);}
+ 
+/* ============ HERO ============ */
+#hero{
+  min-height:100vh; display:flex; align-items:center; position:relative; overflow:hidden;
+  padding-top:var(--nav-h);
+}
+#hero::before{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, rgba(10,20,12,0.45), rgba(10,20,12,0.7)),
+    url('https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?q=80&w=1920&auto=format&fit=crop') center/cover no-repeat;
+  z-index:0;
+}
+.leaf-float{position:absolute; opacity:0.55; z-index:1; pointer-events:none; animation:floatLeaf linear infinite;}
+@keyframes floatLeaf{
+  0%{transform:translateY(0) rotate(0deg); opacity:0;}
+  10%{opacity:0.5;}
+  90%{opacity:0.4;}
+  100%{transform:translateY(-110vh) rotate(360deg); opacity:0;}
+}
+.hero-inner{position:relative; z-index:2; color:#fff; max-width:880px; padding:0 24px; margin:0 auto; text-align:center;}
+.hero-inner .eyebrow{color:#C8F0CC;}
+.hero-inner .eyebrow::before{background:#C8F0CC;}
+.hero-inner h1{font-size:clamp(2.4rem,6vw,4.4rem); font-weight:700; color:#fff;}
+.hero-inner h1 .typed{color:var(--accent); border-right:3px solid var(--accent); padding-right:4px;}
+.hero-sub{margin-top:18px; font-size:1.15rem; color:#e7f3e2; opacity:0.92;}
+.hero-btns{display:flex; gap:16px; justify-content:center; margin-top:38px; flex-wrap:wrap;}
+.btn{
+  position:relative; overflow:hidden; padding:15px 32px; border-radius:50px; font-weight:600; font-size:0.95rem;
+  display:inline-flex; align-items:center; gap:8px; transition:transform .25s ease, box-shadow .25s ease;
+}
+.btn-primary{background:var(--primary); color:#fff; box-shadow:0 10px 25px rgba(46,125,50,0.4);}
+.btn-primary:hover{transform:translateY(-3px); box-shadow:0 16px 32px rgba(46,125,50,0.5);}
+.btn-ghost{border:1.5px solid rgba(255,255,255,0.7); color:#fff; backdrop-filter:blur(6px);}
+.btn-ghost:hover{transform:translateY(-3px); background:rgba(255,255,255,0.12);}
+.ripple{position:absolute; border-radius:50%; background:rgba(255,255,255,0.5); transform:scale(0); animation:rippleAnim .6s linear; pointer-events:none;}
+@keyframes rippleAnim{to{transform:scale(3); opacity:0;}}
+ 
+.hero-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:64px; position:relative; z-index:2; max-width:900px; margin-inline:auto; padding:0 24px;}
+.hstat{text-align:center; color:#fff;}
+.hstat .num{font-family:var(--font-display); font-size:clamp(1.8rem,3vw,2.6rem); font-weight:700; color:var(--accent);}
+.hstat .lbl{font-size:0.82rem; opacity:0.85; margin-top:4px;}
+.scroll-cue{position:absolute; bottom:26px; left:50%; transform:translateX(-50%); z-index:2; color:#fff; opacity:0.8; font-size:0.78rem; display:flex; flex-direction:column; align-items:center; gap:6px;}
+.scroll-cue .line{width:1px; height:28px; background:#fff; animation:scrollCue 1.8s ease-in-out infinite;}
+@keyframes scrollCue{0%{transform:scaleY(0); opacity:0;}50%{transform:scaleY(1); opacity:1;}100%{transform:scaleY(0); opacity:0; transform-origin:bottom;}}
+ 
+/* ============ ABOUT ============ */
+.about-grid{display:grid; grid-template-columns:1.1fr 1fr; gap:64px; align-items:start;}
+.about-text p{margin-bottom:16px; opacity:0.85; font-size:1.02rem;}
+.about-points{list-style:none; margin-top:24px; display:flex; flex-direction:column; gap:12px;}
+.about-points li{display:flex; gap:10px; align-items:flex-start; font-size:0.95rem; opacity:0.85;}
+.about-points li::before{content:"✓"; color:var(--primary); font-weight:700; flex-shrink:0;}
+.icon-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px;}
+.icon-card{
+  background:var(--card); border-radius:var(--radius); padding:28px 20px; text-align:center;
+  box-shadow:var(--shadow); transition:transform .3s ease, box-shadow .3s ease;
+}
+.icon-card:hover{transform:translateY(-8px); box-shadow:var(--shadow-lg);}
+.icon-card .emoji{font-size:2.2rem; margin-bottom:10px;}
+.icon-card h4{font-size:1rem; margin-bottom:6px;}
+.icon-card p{font-size:0.82rem; opacity:0.7;}
+ 
+/* ============ CARDS GRID (types) ============ */
+.card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:28px;}
+.type-card{
+  background:var(--card); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
+  transition:transform .4s ease, box-shadow .4s ease; cursor:pointer;
+}
+.type-card:hover{transform:translateY(-10px); box-shadow:var(--shadow-lg);}
+.type-card .img-wrap{height:190px; overflow:hidden;}
+.type-card img{width:100%; height:100%; object-fit:cover; transition:transform .6s ease;}
+.type-card:hover img{transform:scale(1.12);}
+.type-card .body{padding:22px;}
+.type-card h3{font-size:1.15rem; margin-bottom:8px;}
+.type-card p{font-size:0.88rem; opacity:0.72;}
+.type-card .more{font-size:0.78rem; color:var(--primary); font-weight:600; margin-top:10px; display:inline-block;}
+[data-theme="dark"] .type-card .more{color:var(--secondary);}
+ 
+/* ============ TECH CARDS ============ */
+.tech-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:26px;}
+.tech-card{
+  background:var(--card); border-radius:var(--radius); padding:0; overflow:hidden; box-shadow:var(--shadow);
+  transition:transform .35s ease, box-shadow .35s ease; position:relative;
+}
+.tech-card:hover{transform:translateY(-8px) scale(1.02); box-shadow:var(--shadow-lg);}
+.tech-card .img-wrap{height:150px; overflow:hidden;}
+.tech-card img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+.tech-card:hover img{transform:scale(1.1);}
+.tech-card .body{padding:18px 20px 22px;}
+.tech-card h4{font-size:1.02rem; margin-bottom:6px;}
+.tech-card .more{font-size:0.78rem; color:var(--primary); font-weight:600; margin-top:8px; display:inline-block;}
+[data-theme="dark"] .tech-card .more{color:var(--secondary);}
+ 
+/* modal */
+.modal-overlay{position:fixed; inset:0; background:rgba(10,20,12,0.6); backdrop-filter:blur(4px); z-index:1200; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease; padding:24px;}
+.modal-overlay.open{opacity:1; visibility:visible;}
+.modal-box{background:var(--card); border-radius:20px; max-width:480px; width:100%; padding:32px; position:relative; box-shadow:var(--shadow-lg); transform:translateY(20px); transition:transform .3s ease;}
+.modal-overlay.open .modal-box{transform:translateY(0);}
+.modal-close{position:absolute; top:16px; right:16px; width:32px; height:32px; border-radius:50%; background:rgba(46,125,50,0.1); display:flex; align-items:center; justify-content:center; font-size:1.1rem;}
+.modal-box h3{margin-bottom:12px; font-size:1.3rem;}
+.modal-box p{font-size:0.92rem; opacity:0.78; line-height:1.7;}
+ 
+/* ============ TIMELINE ============ */
+.timeline{position:relative; max-width:780px; margin:0 auto;}
+.timeline::before{content:""; position:absolute; left:24px; top:0; bottom:0; width:2px; background:linear-gradient(var(--secondary),var(--accent));}
+.week-item{position:relative; padding-left:64px; margin-bottom:18px;}
+.week-dot{position:absolute; left:14px; top:18px; width:22px; height:22px; border-radius:50%; background:var(--card); border:3px solid var(--primary); display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; color:var(--primary); z-index:1;}
+.week-head{
+  background:var(--card); border-radius:14px; padding:18px 22px; box-shadow:var(--shadow); cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; transition:box-shadow .3s ease;
+}
+.week-head:hover{box-shadow:var(--shadow-lg);}
+.week-head h4{font-size:1.02rem;}
+.week-head .tag{font-size:0.78rem; opacity:0.6;}
+.week-head .arrow{transition:transform .35s ease; flex-shrink:0;}
+.week-item.open .arrow{transform:rotate(180deg);}
+.week-body{max-height:0; overflow:hidden; transition:max-height .4s ease;}
+.week-body-inner{padding:18px 22px 6px; font-size:0.88rem; opacity:0.8;}
+.week-body-inner h5{font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--primary); margin:10px 0 4px;}
+[data-theme="dark"] .week-body-inner h5{color:var(--secondary);}
+.week-body-inner ul{padding-left:18px; margin-bottom:6px;}
+ 
+/* ============ GALLERY ============ */
+.masonry{column-count:3; column-gap:18px;}
+@media(max-width:900px){.masonry{column-count:2;}}
+@media(max-width:560px){.masonry{column-count:1;}}
+.masonry-item{margin-bottom:18px; border-radius:14px; overflow:hidden; box-shadow:var(--shadow); cursor:pointer; position:relative; break-inside:avoid;}
+.masonry-item img{width:100%; transition:transform .5s ease, filter .5s ease;}
+.masonry-item:hover img{transform:scale(1.08);}
+.masonry-item .cap{position:absolute; bottom:0; left:0; right:0; padding:14px; background:linear-gradient(180deg, transparent, rgba(0,0,0,0.7)); color:#fff; font-size:0.82rem; opacity:0; transition:opacity .3s ease;}
+.masonry-item:hover .cap{opacity:1;}
+#lightbox{position:fixed; inset:0; background:rgba(0,0,0,0.88); z-index:1300; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:opacity .3s ease, visibility .3s ease;}
+#lightbox.open{opacity:1; visibility:visible;}
+#lightbox img{max-width:88vw; max-height:84vh; border-radius:10px;}
+#lightbox .lb-close{position:absolute; top:24px; right:32px; color:#fff; font-size:2rem; cursor:pointer;}
+ 
+/* ============ BENEFITS ============ */
+.benefit-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:24px;}
+.benefit-card{background:var(--card); border-radius:var(--radius); padding:30px 24px; box-shadow:var(--shadow); transition:transform .3s ease;}
+.benefit-card:hover{transform:translateY(-6px) rotate(-0.5deg);}
+.benefit-card .emoji{font-size:1.8rem; margin-bottom:12px;}
+.benefit-card h4{font-size:1.02rem; margin-bottom:6px;}
+.benefit-card p{font-size:0.85rem; opacity:0.72;}
+ 
+/* ============ STATS ============ */
+#stats{background:linear-gradient(135deg,var(--primary-dark),var(--primary)); color:#fff;}
+.stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:30px; text-align:center;}
+.stat-num{font-family:var(--font-display); font-size:clamp(2.2rem,4vw,3.2rem); font-weight:700; color:var(--accent);}
+.stat-lbl{font-size:0.88rem; opacity:0.85; margin-top:6px;}
+ 
+/* ============ CONCLUSION ============ */
+.conclusion-card{
+  background:var(--card); border-radius:24px; padding:54px; box-shadow:var(--shadow-lg);
+  max-width:880px; margin:0 auto; position:relative; overflow:hidden;
+}
+.conclusion-card::before{content:"🌿"; position:absolute; font-size:8rem; opacity:0.06; right:-10px; bottom:-30px;}
+.conclusion-card h2{margin-bottom:18px;}
+.conclusion-card p{opacity:0.82; margin-bottom:14px;}
+ 
+/* ============ CONTACT ============ */
+.contact-card{
+  background:var(--card); border-radius:var(--radius); padding:44px; box-shadow:var(--shadow); max-width:680px; margin:0 auto;
+}
+.info-row{display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid rgba(46,125,50,0.12); font-size:0.95rem;}
+.info-row:last-child{border-bottom:none;}
+.info-row span:first-child{opacity:0.6;}
+.info-row span:last-child{font-weight:600;}
+.social-row{display:flex; gap:14px; margin-top:24px; justify-content:center;}
+ 
+/* ============ FOOTER ============ */
+footer{background:var(--primary-dark); color:#e8f5e9; padding:60px 0 30px;}
+.footer-grid{display:flex; justify-content:space-between; flex-wrap:wrap; gap:36px; padding-bottom:36px; border-bottom:1px solid rgba(255,255,255,0.12);}
+.footer-links{display:flex; gap:30px; flex-wrap:wrap;}
+.footer-links a{opacity:0.8; font-size:0.9rem;}
+.footer-links a:hover{opacity:1;}
+.footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:24px; flex-wrap:wrap; gap:14px; font-size:0.82rem; opacity:0.75;}
+#back-to-top{
+  position:fixed; bottom:28px; right:28px; width:48px; height:48px; border-radius:50%; background:var(--primary);
+  color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-lg); z-index:900;
+  opacity:0; visibility:hidden; transform:translateY(10px); transition:all .3s ease;
+}
+#back-to-top.show{opacity:1; visibility:visible; transform:translateY(0);}
+ 
+/* ============ RESPONSIVE ============ */
+@media(max-width:920px){
+  .nav-links{position:fixed; top:var(--nav-h); left:0; width:100%; background:var(--card); flex-direction:column; padding:24px; gap:18px; box-shadow:var(--shadow-lg); transform:translateY(-110%); transition:transform .35s ease; max-height:calc(100vh - var(--nav-h)); overflow:auto;}
+  .nav-links.open{transform:translateY(0);}
+  .hamburger{display:flex;}
+  .about-grid{grid-template-columns:1fr; gap:40px;}
+  .hero-stats{grid-template-columns:repeat(2,1fr);}
+  .stats-grid{grid-template-columns:repeat(2,1fr);}
+  #search-box{width:calc(100vw - 48px);}
+}
+@media(max-width:600px){
+  .section{padding:80px 0;}
+  .conclusion-card{padding:32px;}
+  .contact-card{padding:28px;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important;}
+}
+</style>
+</head>
+<body data-theme="light">
+ 
+<div id="loader"><div class="loader-leaf"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2C7 2 3 7 3 13c0 5 4 9 9 9s9-4 9-9c0-6-4-11-9-11z" fill="#66BB6A"/><path d="M12 4v18" stroke="#1B5E20" stroke-width="1.2"/></svg></div><span>HORTICULTURE</span></div>
+ 
+<div id="scroll-progress"></div>
+ 
+<!-- ============ NAVBAR ============ -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <div class="logo"><span class="dot"></span>Horticulture</div>
+    <div class="nav-links" id="nav-links">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#types" class="nav-link">Types</a>
+      <a href="#tech" class="nav-link">Technology</a>
+      <a href="#gallery" class="nav-link">Gallery</a>
+      <a href="#benefits" class="nav-link">Benefits</a>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="search-toggle" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button class="icon-btn" id="theme-toggle" aria-label="Toggle theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 109 9 9 9 0 11-9-9z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+    <div id="search-box">
+      <input type="text" id="search-input" placeholder="Search sections, topics..." />
+      <div id="search-results"></div>
+    </div>
+  </div>
+</nav>
+ 
+<!-- ============ HERO ============ -->
+<header id="home" id="hero">
+  <div id="leaf-container"></div>
+  <div class="hero-inner">
+    <div class="eyebrow">Community Service Project</div>
+    <h1>Horticulture — <span class="typed" id="typed-text"></span></h1>
+    <p class="hero-sub">Cultivating a greener and healthier future through sustainable farming, modern agri-technology, and hands-on community engagement.</p>
+    <div class="hero-btns">
+      <a href="#about" class="btn btn-primary ripple-btn">Explore Project →</a>
+      <a href="#conclusion" class="btn btn-ghost ripple-btn">View Report</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="num" data-count="30" data-suffix="+">0</div><div class="lbl">Plant Species</div></div>
+      <div class="hstat"><div class="num" data-count="6">0</div><div class="lbl">Weeks Activity</div></div>
+      <div class="hstat"><div class="num" data-count="8">0</div><div class="lbl">Modern Technologies</div></div>
+      <div class="hstat"><div class="num" data-count="100" data-suffix="%">0</div><div class="lbl">Sustainable</div></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span>SCROLL</div>
+</header>
+ 
+<!-- ============ ABOUT ============ -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="eyebrow">About the Project</div>
+        <h2 style="font-size:clamp(1.8rem,3.4vw,2.5rem); margin-bottom:18px;">Understanding Horticulture</h2>
+        <p>Horticulture is the science and art of cultivating fruits, vegetables, flowers, and ornamental plants. It bridges agriculture and ecology — turning small patches of land into sources of nutrition, beauty, and income.</p>
+        <p>As part of this Community Service Project, we explored how horticultural practices can strengthen local food security, support livelihoods, and restore green cover in our community.</p>
+        <ul class="about-points">
+          <li>Improves nutrition through fresh, locally-grown produce</li>
+          <li>Creates sustainable livelihood opportunities for farmers</li>
+          <li>Enhances biodiversity and urban green cover</li>
+          <li>Introduces modern, resource-efficient growing techniques</li>
+        </ul>
+      </div>
+      <div class="icon-grid">
+        <div class="icon-card reveal-zoom"><div class="emoji">🌱</div><h4>Sustainability</h4><p>Eco-friendly growing practices that protect soil and water.</p></div>
+        <div class="icon-card reveal-zoom"><div class="emoji">🍎</div><h4>Nutrition</h4><p>Fresh produce that fuels healthier communities.</p></div>
+        <div class="icon-card reveal-zoom"><div class="emoji">🌼</div><h4>Floriculture</h4><p>Flower cultivation for beauty, trade, and ecology.</p></div>
+        <div class="icon-card reveal-zoom"><div class="emoji">🥕</div><h4>Vegetable Farming</h4><p>Efficient cultivation of everyday food staples.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ TYPES ============ -->
+<section id="types" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Branches of the Field</div>
+      <h2>Types of Horticulture</h2>
+      <p>Five core disciplines that together shape how we grow, design, and sustain green spaces.</p>
+    </div>
+    <div class="card-grid" id="types-grid"></div>
+  </div>
+</section>
+ 
+<!-- ============ TECHNOLOGIES ============ -->
+<section id="tech" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Innovation in the Field</div>
+      <h2>Modern Horticulture Technologies</h2>
+      <p>Tap any card to learn how technology is reshaping how we grow.</p>
+    </div>
+    <div class="tech-grid" id="tech-grid"></div>
+  </div>
+</section>
+ 
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Moments from the Project</div>
+      <h2>Gallery</h2>
+      <p>A visual record of the farms, plants, and people behind this project.</p>
+    </div>
+    <div class="masonry" id="gallery-grid"></div>
+  </div>
+</section>
+ 
+<!-- ============ BENEFITS ============ -->
+<section id="benefits" class="section section-alt">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Why It Matters</div>
+      <h2>Benefits of Horticulture</h2>
+    </div>
+    <div class="benefit-grid" id="benefits-grid">
+      <div class="benefit-card reveal-zoom"><div class="emoji">🥗</div><h4>Healthy Food</h4><p>Direct access to fresh, nutrient-rich produce.</p></div>
+      <div class="benefit-card reveal-zoom"><div class="emoji">💼</div><h4>Employment</h4><p>Creates livelihood opportunities across the supply chain.</p></div>
+      <div class="benefit-card reveal-zoom"><div class="emoji">🌍</div><h4>Environmental Protection</h4><p>Improves air quality and reduces soil erosion.</p></div>
+      <div class="benefit-card reveal-zoom"><div class="emoji">📈</div><h4>Economic Growth</h4><p>Boosts local trade and small-farm income.</p></div>
+      <div class="benefit-card reveal-zoom"><div class="emoji">🦋</div><h4>Biodiversity</h4><p>Supports pollinators and diverse plant ecosystems.</p></div>
+      <div class="benefit-card reveal-zoom"><div class="emoji">🌾</div><h4>Organic Farming</h4><p>Encourages chemical-free, sustainable cultivation.</p></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ STATS ============ -->
+<section id="stats" class="section">
+  <div class="container">
+    <div class="stats-grid">
+      <div><div class="stat-num" data-count="100" data-suffix="+">0</div><div class="stat-lbl">Plants Observed</div></div>
+      <div><div class="stat-num" data-count="20" data-suffix="+">0</div><div class="stat-lbl">Farmer Interactions</div></div>
+      <div><div class="stat-num" data-count="6">0</div><div class="stat-lbl">Project Weeks</div></div>
+      <div><div class="stat-num" data-count="15" data-suffix="+">0</div><div class="stat-lbl">Modern Technologies</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ CONCLUSION ============ -->
+<section id="conclusion" class="section">
+  <div class="container">
+    <div class="conclusion-card reveal">
+      <div class="eyebrow">In Closing</div>
+      <h2>Growing Forward</h2>
+      <p>This project deepened our understanding of horticulture as more than farming — it is a tool for sustainable living, food security, and environmental balance.</p>
+      <p>From traditional fruit and vegetable cultivation to hydroponics and AI-driven disease detection, we saw how tradition and technology can grow together.</p>
+      <p>Looking ahead, wider adoption of smart, sustainable horticulture can support healthier communities and a more resilient environment for generations to come.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="logo" style="color:#fff;"><span class="dot"></span>Horticulture</div>
+      <div class="footer-links">
+        <a href="#home">Home</a><a href="#about">About</a><a href="#types">Types</a>
+        <a href="#tech">Technology</a><a href="#gallery">Gallery</a>
+      </div>
+      <div class="social-row">
+        <a href="#" class="icon-btn" style="background:rgba(255,255,255,0.1);" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/><path d="M10 9v12M10 13a4 4 0 018 0v8"/></svg></a>
+        <a href="#" class="icon-btn" style="background:rgba(255,255,255,0.1);" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.4c0-1 .1-1.4-.5-2 2-.2 4-1 4-4.5 0-1.1-.4-2-1-2.7.1-.3.4-1.4-.1-2.8 0 0-1.3-.4-3 .8a10.5 10.5 0 00-5.6 0c-1.7-1.2-3-.8-3-.8-.5 1.4-.2 2.5-.1 2.8-.6.7-1 1.6-1 2.7 0 3.5 2 4.3 4 4.5-.4.4-.4.8-.5 1.4V19"/></svg></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Horticulture Community Service Project. All rights reserved.</span>
+      <span>Built with 🌱 for a greener future.</span>
+    </div>
+  </div>
+</footer>
+ 
+<button id="back-to-top" aria-label="Back to top">↑</button>
+ 
+<div class="modal-overlay" id="tech-modal">
+  <div class="modal-box">
+    <button class="modal-close" id="modal-close">✕</button>
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc"></p>
+  </div>
+</div>
+ 
+<div id="lightbox"><span class="lb-close" id="lb-close">✕</span><img id="lb-img" src="" alt=""></div>
+ 
+<script>
+/* ============ LOADER ============ */
+window.addEventListener('load', ()=>{
+  setTimeout(()=> document.getElementById('loader').classList.add('hide'), 500);
+});
+ 
+/* ============ SCROLL PROGRESS + NAV SHADOW + BACK TO TOP ============ */
+const progressBar = document.getElementById('scroll-progress');
+const navbar = document.getElementById('navbar');
+const backTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', ()=>{
+  const h = document.documentElement;
+  const pct = (h.scrollTop)/(h.scrollHeight - h.clientHeight) * 100;
+  progressBar.style.width = pct + '%';
+  navbar.classList.toggle('scrolled', h.scrollTop > 10);
+  backTop.classList.toggle('show', h.scrollTop > 500);
+});
+backTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+ 
+/* ============ THEME TOGGLE ============ */
+const themeBtn = document.getElementById('theme-toggle');
+themeBtn.addEventListener('click', ()=>{
+  const body = document.body;
+  const next = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  body.setAttribute('data-theme', next);
+});
+ 
+/* ============ HAMBURGER ============ */
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('nav-links');
+hamburger.addEventListener('click', ()=>{
+  navLinks.classList.toggle('open');
+  hamburger.classList.toggle('active');
+});
+document.querySelectorAll('.nav-link').forEach(l=> l.addEventListener('click', ()=> navLinks.classList.remove('open')));
+ 
+/* ============ SEARCH ============ */
+const searchToggle = document.getElementById('search-toggle');
+const searchBox = document.getElementById('search-box');
+const searchInput = document.getElementById('search-input');
+const searchResults = document.getElementById('search-results');
+const searchIndex = [
+  {label:'About Horticulture', id:'about'},
+  {label:'Types of Horticulture', id:'types'},
+  {label:'Fruit Horticulture', id:'types'},
+  {label:'Vegetable Horticulture', id:'types'},
+  {label:'Flower Horticulture', id:'types'},
+  {label:'Landscape Gardening', id:'types'},
+  {label:'Modern Technologies', id:'tech'},
+  {label:'Hydroponics', id:'tech'},
+  {label:'Smart Greenhouse', id:'tech'},
+  {label:'Gallery', id:'gallery'},
+  {label:'Benefits', id:'benefits'},
+];
+searchToggle.addEventListener('click', ()=>{ searchBox.classList.toggle('open'); searchInput.focus(); });
+searchInput.addEventListener('input', ()=>{
+  const q = searchInput.value.toLowerCase().trim();
+  searchResults.innerHTML='';
+  if(!q) return;
+  searchIndex.filter(i=>i.label.toLowerCase().includes(q)).forEach(i=>{
+    const el = document.createElement('div');
+    el.className='search-result'; el.textContent=i.label;
+    el.addEventListener('click', ()=>{
+      document.getElementById(i.id).scrollIntoView({behavior:'smooth'});
+      searchBox.classList.remove('open'); searchInput.value='';
+    });
+    searchResults.appendChild(el);
+  });
+});
+document.addEventListener('click', (e)=>{
+  if(!searchBox.contains(e.target) && e.target!==searchToggle && !searchToggle.contains(e.target)){
+    searchBox.classList.remove('open');
+  }
+});
+ 
+/* ============ BUTTON RIPPLE ============ */
+document.querySelectorAll('.ripple-btn').forEach(btn=>{
+  btn.addEventListener('click', function(e){
+    const rect = this.getBoundingClientRect();
+    const ripple = document.createElement('span');
+    ripple.className='ripple';
+    ripple.style.left = (e.clientX-rect.left)+'px';
+    ripple.style.top = (e.clientY-rect.top)+'px';
+    ripple.style.width = ripple.style.height = Math.max(rect.width,rect.height)+'px';
+    this.appendChild(ripple);
+    setTimeout(()=>ripple.remove(),650);
+  });
+});
+ 
+/* ============ TYPING ANIMATION ============ */
+const typedEl = document.getElementById('typed-text');
+const phrases = ['Cultivating a Greener Future','Growing Healthier Communities','Sustainable Farming, Smarter Living'];
+let pIndex=0, cIndex=0, deleting=false;
+function typeLoop(){
+  const phrase = phrases[pIndex];
+  if(!deleting){
+    cIndex++;
+    typedEl.textContent = phrase.slice(0,cIndex);
+    if(cIndex===phrase.length){ deleting=true; setTimeout(typeLoop,1600); return; }
+  } else {
+    cIndex--;
+    typedEl.textContent = phrase.slice(0,cIndex);
+    if(cIndex===0){ deleting=false; pIndex=(pIndex+1)%phrases.length; }
+  }
+  setTimeout(typeLoop, deleting?40:70);
+}
+typeLoop();
+ 
+/* ============ FLOATING LEAVES ============ */
+const leafContainer = document.getElementById('leaf-container');
+function spawnLeaf(){
+  const leaf = document.createElement('div');
+  leaf.className='leaf-float';
+  leaf.style.left = Math.random()*100+'%';
+  leaf.style.bottom = '-40px';
+  leaf.style.fontSize = (14+Math.random()*16)+'px';
+  leaf.style.animationDuration = (8+Math.random()*8)+'s';
+  leaf.textContent = ['🍃','🌿','🍂'][Math.floor(Math.random()*3)];
+  leafContainer.appendChild(leaf);
+  setTimeout(()=>leaf.remove(), 17000);
+}
+setInterval(spawnLeaf, 1200);
+for(let i=0;i<5;i++) setTimeout(spawnLeaf, i*400);
+ 
+/* ============ SCROLL REVEAL ============ */
+const revealEls = document.querySelectorAll('.reveal, .reveal-zoom');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach((entry, i)=>{
+    if(entry.isIntersecting){
+      setTimeout(()=> entry.target.classList.add('in'), i*60);
+      io.unobserve(entry.target);
+    }
+  });
+},{threshold:0.15});
+revealEls.forEach(el=>io.observe(el));
+ 
+/* ============ ANIMATED COUNTERS ============ */
+const counters = document.querySelectorAll('[data-count]');
+const counterIO = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el = entry.target;
+      const target = parseInt(el.getAttribute('data-count'));
+      const suffix = el.getAttribute('data-suffix')||'';
+      let current = 0;
+      const step = Math.max(1, Math.ceil(target/60));
+      const tick = ()=>{
+        current += step;
+        if(current >= target){ el.textContent = target+suffix; }
+        else { el.textContent = current+suffix; requestAnimationFrame(tick); }
+      };
+      tick();
+      counterIO.unobserve(el);
+    }
+  });
+},{threshold:0.4});
+counters.forEach(c=>counterIO.observe(c));
+ 
+/* ============ TYPES OF HORTICULTURE DATA ============ */
+const typeData = [
+  {title:'🍊 Fruit Horticulture', img:'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?q=80&w=800&auto=format&fit=crop',
+    short:'Cultivation of fruit-bearing trees and shrubs for nutrition and commerce.',
+    desc:'Fruit horticulture, also called pomology, deals with the cultivation, harvesting, and storage of fruit-bearing trees and shrubs such as mango, citrus, banana, and apple. It involves techniques like grafting, pruning, and pest management to improve yield and fruit quality. Beyond nutrition, fruit orchards support rural employment, export trade, and long-term soil stability through deep root systems.'},
+  {title:'🥕 Vegetable Horticulture', img:'https://images.unsplash.com/photo-1518843875459-f738682238a6?q=80&w=800&auto=format&fit=crop',
+    short:'Growing edible plants for daily nutrition and food security.',
+    desc:'Vegetable horticulture, or olericulture, focuses on growing edible plants like tomatoes, spinach, carrots, and beans for daily consumption. It requires careful attention to soil fertility, irrigation scheduling, and crop rotation to prevent disease build-up. Because vegetables have short growth cycles, this branch plays a key role in ensuring quick, reliable food security for communities.'},
+  {title:'🌼 Flower Horticulture', img:'https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=800&auto=format&fit=crop',
+    short:'Cultivating ornamental flowers for beauty, trade, and rituals.',
+    desc:'Flower horticulture, or floriculture, is the cultivation of ornamental flowering plants such as roses, marigolds, and chrysanthemums. These are grown for decorative use, religious and cultural ceremonies, and the cut-flower trade. Floriculture is often highly profitable per acre and supports pollinator populations, making it valuable both economically and ecologically.'},
+  {title:'🏡 Landscape Gardening', img:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=800&auto=format&fit=crop',
+    short:'Designing outdoor spaces that balance aesthetics and ecology.',
+    desc:'Landscape gardening combines art and horticultural science to design outdoor spaces such as parks, gardens, and campuses. It involves selecting plants for visual appeal, shade, and seasonal interest while considering drainage, soil type, and maintenance needs. Well-planned landscaping improves air quality, reduces urban heat, and creates spaces for community well-being.'}
+];
+const typesGrid = document.getElementById('types-grid');
+typeData.forEach(t=>{
+  const card = document.createElement('div');
+  card.className='type-card reveal-zoom';
+  card.innerHTML = `<div class="img-wrap"><img src="${t.img}" alt="${t.title}" loading="lazy"></div>
+    <div class="body"><h3>${t.title}</h3><p>${t.short}</p><span class="more">Read more →</span></div>`;
+  card.addEventListener('click', ()=> openModal(t.title, t.desc));
+  typesGrid.appendChild(card);
+  io.observe(card);
+});
+ 
+/* ============ TECH CARDS DATA ============ */
+const techData = [
+  {title:'Smart Greenhouse', img:'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?q=80&w=600&auto=format&fit=crop', desc:'Climate-controlled structures that regulate temperature, humidity, and light to grow crops year-round regardless of outdoor conditions.'},
+  {title:'Hydroponics', img:'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=600&auto=format&fit=crop', desc:'Soil-free cultivation where plant roots sit in nutrient-rich water, allowing faster growth and significant water savings.'},
+  {title:'Vertical Farming', img:'https://images.unsplash.com/photo-1631889993959-41b4e9c6e3c5?q=80&w=600&auto=format&fit=crop', desc:'Stacked growing layers that maximize yield per square foot, ideal for urban spaces with limited land.'},
+  {title:'AI Disease Detection', img:'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=600&auto=format&fit=crop', desc:'Computer vision models scan leaf images to detect early signs of disease, helping farmers act before crops are lost.'},
+  {title:'IoT Smart Irrigation', img:'https://images.unsplash.com/photo-1591857177580-dc82b9ac4e1e?q=80&w=600&auto=format&fit=crop', desc:'Soil sensors and connected valves deliver water precisely when and where it is needed, cutting waste significantly.'},
+  {title:'Drone Monitoring', img:'https://images.unsplash.com/photo-1508614999368-9260051292e5?q=80&w=600&auto=format&fit=crop', desc:'Aerial drones capture crop health data across large fields, spotting issues human inspection might miss.'},
+  {title:'Solar Powered Irrigation', img:'https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=600&auto=format&fit=crop', desc:'Solar panels power irrigation pumps, reducing dependence on grid electricity and lowering operating costs.'}
+];
+const techGrid = document.getElementById('tech-grid');
+techData.forEach(t=>{
+  const card = document.createElement('div');
+  card.className='tech-card reveal-zoom';
+  card.innerHTML = `<div class="img-wrap"><img src="${t.img}" alt="${t.title}" loading="lazy"></div>
+    <div class="body"><h4>${t.title}</h4><span class="more">View details →</span></div>`;
+  card.addEventListener('click', ()=> openModal(t.title, t.desc));
+  techGrid.appendChild(card);
+  io.observe(card);
+});
+ 
+/* ============ MODAL ============ */
+const techModal = document.getElementById('tech-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalDesc = document.getElementById('modal-desc');
+function openModal(title, desc){ modalTitle.textContent=title; modalDesc.textContent=desc; techModal.classList.add('open'); }
+document.getElementById('modal-close').addEventListener('click', ()=> techModal.classList.remove('open'));
+techModal.addEventListener('click', (e)=>{ if(e.target===techModal) techModal.classList.remove('open'); });
+ 
+/* ============ GALLERY ============ */
+const galleryData = [
+  {img:'https://images.unsplash.com/photo-1500651230702-0e2d8a49d4ad?q=80&w=600&auto=format&fit=crop', cap:'Fruit farm at sunrise'},
+  {img:'https://images.unsplash.com/photo-1518843875459-f738682238a6?q=80&w=600&auto=format&fit=crop', cap:'Fresh vegetable harvest'},
+  {img:'https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=600&auto=format&fit=crop', cap:'Flower beds in bloom'},
+  {img:'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=600&auto=format&fit=crop', cap:'Hydroponic growing system'},
+  {img:'https://images.unsplash.com/photo-1620200423727-8127f75d3f93?q=80&w=600&auto=format&fit=crop', cap:'Inside the greenhouse'},
+  {img:'https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=600&auto=format&fit=crop', cap:'Drip irrigation in action'},
+  {img:'https://images.unsplash.com/photo-1592982537447-7440770cbfc9?q=80&w=600&auto=format&fit=crop', cap:'Community planting day'},
+  {img:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?q=80&w=600&auto=format&fit=crop', cap:'Landscaped garden path'}
+];
+const galleryGrid = document.getElementById('gallery-grid');
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lb-img');
+galleryData.forEach(g=>{
+  const item = document.createElement('div');
+  item.className='masonry-item reveal-zoom';
+  item.innerHTML = `<img src="${g.img}" alt="${g.cap}" loading="lazy"><div class="cap">${g.cap}</div>`;
+  item.addEventListener('click', ()=>{ lbImg.src=g.img.replace('w=600','w=1600'); lightbox.classList.add('open'); });
+  galleryGrid.appendChild(item);
+  io.observe(item);
+});
+document.getElementById('lb-close').addEventListener('click', ()=> lightbox.classList.remove('open'));
+lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) lightbox.classList.remove('open'); });
+ 
+/* ============ ESC KEY CLOSES MODALS ============ */
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape'){ techModal.classList.remove('open'); lightbox.classList.remove('open'); searchBox.classList.remove('open'); }
+});
+</script>
+</body>
+</html>
